@@ -1,8 +1,9 @@
 use std::fmt;
 
 use crate::config::{FIELD_SIZE_X, FIELD_SIZE_Y};
+use crate::turn::Turn;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum BlockKind {
     Black,
     White,
@@ -27,6 +28,20 @@ pub struct Field {
 impl Field {
     pub fn new() -> Field {
         Field { field: [[BlockKind::Empty; FIELD_SIZE_X]; FIELD_SIZE_Y] }
+    }
+    pub fn put_block(&mut self, pos: &usize, turn: &Turn) -> Result<(),()> {
+        let put_block = match turn {
+            Turn::Black => BlockKind::Black,
+            Turn::White => BlockKind::White,
+        };
+        for fi in self.field.iter_mut().rev() {
+            if fi[pos - 1] == BlockKind::Empty {
+                fi[pos - 1] = put_block;
+                return Ok(());
+            }
+        }
+        //ここ来たら積めない
+        Err(())
     }
 }
 
