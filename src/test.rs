@@ -16,3 +16,22 @@ fn test_game_end() {
     println!("{}", actual);
     assert_eq!(actual, expect);
 }
+#[test]
+fn test_draw() {
+    use crate::field::BlockKind::*;
+    use crate::field::Field;
+    let field = [[Black, Black, White, Black, White, Black, Black],
+        [Black, White, White, Black, White, White, Black],
+        [White, Black, Black, White, Black, Black, White],
+        [Black, White, White, Black, White, White, Black],
+        [Black, Black, White, Black, White, Black, Black],
+        [Black, White, White, Black, White, White, Black]
+    ];
+    let mut field = Field::from_array(field);
+    let actual = field.check_draw();
+    let expect = true;
+    println!("{}", field);
+    println!("{}", actual);
+    assert_eq!(actual, expect);
+}
+

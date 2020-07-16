@@ -98,6 +98,12 @@ impl Field {
             Err(_) => Err(MyError::None)
         }
     }
+    pub fn check_draw(&self) -> bool {
+        for i in self.field.iter() {
+            if i.contains(&BlockKind::Empty) { return false; }
+        }
+        true
+    }
 }
 /*いらないかも
 fn check_to_vector(&self, fx: usize, fy: usize, vx: isize, vy: isize) -> bool {
